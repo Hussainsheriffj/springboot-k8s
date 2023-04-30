@@ -46,7 +46,7 @@ ls -lsrt
 10. Make the DB up
 /usr/local/bin/kubectl get pods
 /usr/local/bin/kubectl create -f db-deployment.yaml
-/usr/local/bin/kubectl exec -it mysql-f759455cd-bp58w /bin/bash           --to enter the container
+/usr/local/bin/kubectl exec -it mysql-f759455cd-ncvzg /bin/bash           --to enter the container
 mysql -u root -p
 root                      --entered root when password was asked
 show databases;
@@ -59,19 +59,38 @@ mvn -v
 docker build -t hussainsheriffj/demo-app:1.0 .
 
 13. docker login
+hussainsheriffj then you know the password
+docker image push hussainsheriffj/demo-app:1.0
+/usr/local/bin/kubectl get pod
 
 14. /usr/local/bin/kubectl  apply -f app-deployment.yaml
 
-15. /usr/local/bin/kubectl  get svc
+15. /usr/local/bin/kubectl get svc
 
 16.  /usr/local/bin/minikube ip
 
-17. http://<minikubeIP>:31125/orders
+17. http://52.90.76.244:8080/orders
 
 
 18. PUT PORT FORWARD
 
 /usr/local/bin/kubectl port-forward --address 0.0.0.0 svc/springboot-crud-svc 8080:8080 &
+
+go inside ec2 instance check database
+/usr/local/bin/kubectl get pod
+/usr/local/bin/kubectl exec -it mysql-f759455cd-ncvzg /bin/bash               ---go inside the container
+mysql -u root -p
+root                      --entered root when password was asked
+show databases;
+use singamlabs;
+show tables;
+select * from orders_tbl;
+add another item in postman http://52.90.76.244:8080/orders and check it reflecting on orders_tbl database;
+/usr/local/bin/kubectl proxy --address='0.0.0.0' --accept-hosts='^*$'                 ----to see the dashboard
+open another terminal
+/usr/local/bin/minikube dashboard
+http://<ec2-public-ip>:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/pod?namespace=default
+
 
 [HOST PORT TO CONTAINER PORT 
 
